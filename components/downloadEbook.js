@@ -5,7 +5,7 @@ import async from 'async';
 import { Spinner } from 'cli-spinner';
 
 
-export function downloadEbook(ebook, pages, name, callback) {
+export function downloadEbook(ebook, pages, name, start, callback) {
 
     const URL_HOST = "https://jigsaw.vitalsource.com/api/v0/";
 
@@ -32,12 +32,26 @@ export function downloadEbook(ebook, pages, name, callback) {
 
     });
 
+    let pagesFiltered = pages;
 
-    async.eachSeries(pages, (item, cb) => {
+    if (typeof start !== 'undefined') {
+    	
+    	pagesFiltered = pages.filter(function (a){
+	
+			return parseInt(a.cfi.replace("/","")) >= start;
 
+		});
 
+	} else {
+
+		start = 0;
+	}
+
+    async.eachSeries(pagesFiltered, (item, cb) => {
 
         config.uri = URL_HOST + item.url;
+
+        //console.log(item);
 
         request(config, (error, response, body) => {
 
