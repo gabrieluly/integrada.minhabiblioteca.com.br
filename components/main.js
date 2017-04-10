@@ -10,12 +10,13 @@ let ebook = params[0];
 let name = params[1];
 let username = params[2];
 let pass = params[3];
+let start = params[4];
 
 login(username,pass,() => {
 
 	getPages(ebook,(pages)=>{
 
-		downloadEbook(ebook,pages,name,()=>{
+		downloadEbook(ebook,pages,name,start,()=>{
 			console.log("Concluido")
 		});
 
