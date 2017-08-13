@@ -57,7 +57,7 @@ export function downloadEbook(ebook, pages, name, start, callback) {
 
             let $ = cheerio.load(body);
             let itemLink = $("#pbk-page").attr("src");
-            let index = item.label;
+            let index = item.cfi.slice(1);
 
             console.log('\x1b[32m', '    Baixando Pagina    ' + index + '\u2713', '\x1b[0m');
 
